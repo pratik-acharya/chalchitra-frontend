@@ -1,0 +1,158 @@
+<div class="container" *ngIf="movie">
+
+  <div class="row">
+
+    <div class="col-sm-9 blog-main">
+
+      <div class="blog-post">
+        <h2 class="blog-post-title">{{movie.title}}</h2>
+        <div class="row">
+          <div class="col-sm-9">
+            <p class="blog-post-meta badge-wrapper">
+              <span>{{movie.runtime}}</span>
+              <span class="pipe">|</span>
+              <span>{{movie.release_date|date}}</span>
+              <span class="pipe">|</span>
+              <span class="badge badge-default badge-wrapper" *ngFor="let genre of movie.genres">{{genre.name}}</span>
+            </p>
+          </div>
+
+          <div class="col-sm-3">
+            <ngb-rating [(rate)]="movie.vote_average" [max]="1" [readonly]="true">
+              <template let-fill="fill">
+                <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                <span class="h5">{{movie.vote_average}}</span>/10
+              </template>
+            </ngb-rating>
+            <template #popContent>
+              <ngb-rating [(rate)]="currentRate" [max]="5">
+                <template let-fill="fill">
+                  <span class="star-small" [class.filled]="fill === 100">&#9733;</span>
+                </template>
+              </ngb-rating>
+            </template>
+
+            <button type="button" class="btn btn-primary" [ngbPopover]="popContent" placement="bottom">
+              Rate this!
+            </button>
+
+          </div>
+
+
+        </div>
+
+
+        <p>{{movie.tagline}}</p>
+        <ngb-carousel>
+          <template ngbSlide *ngFor="let image of imageList">
+            <img src="{{posterUrl}}{{image.file_path}}" alt="Random first slide">
+            <div class="carousel-caption">
+            </div>
+          </template>
+        </ngb-carousel>
+        <div class="gap"></div>
+        <ngb-accordion  activeIds="overview">
+          <ngb-panel id="overview" title="Overview">
+            <template ngbPanelContent>
+              <p>{{movie.overview}}</p>
+            </template>
+          </ngb-panel>
+          <ngb-panel id="credits" title="Credits">
+            <template ngbPanelContent>
+              <ngb-tabset justify="end">
+                <ngb-tab title="Cast"  *ngIf="castList">
+                  <template ngbTabContent>
+                    <ul class="list-group">
+                      <li class="list-group-item justify-content-between" *ngFor="let cast of castList">
+                        <img class="d-flex mr-3" src="http://placehold.it/64x64" alt="Generic placeholder image">
+
+                        <span>{{cast.name}}<small class="mr-3 ml-3">as</small>{{cast.character}}</span>
+
+                      </li>
+
+                    </ul>
+                  </template>
+                </ngb-tab>
+                <ngb-tab title="Crew" *ngIf="crewList" >
+                  <template ngbTabContent>
+
+                    <ul class="list-group">
+                      <li class="list-group-item justify-content-between" *ngFor="let crew of crewList">
+
+                        <span>{{crew.name}}</span>
+                        <span>{{crew.department}}</span>
+                      </li>
+
+                    </ul>
+                  </template>
+                </ngb-tab>
+
+              </ngb-tabset>
+            </template>
+          </ngb-panel>
+          <ngb-panel id="reviews" title="Reviews">
+            <template ngbPanelContent>
+              <div  class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let review of reviewList">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">{{review.author}}</h5>
+                  <small class="text-muted">3 days ago</small>
+                </div>
+                <hr>
+                <p class="mb-1">{{review.content}}</p>
+              </div>
+            </template>
+          </ngb-panel>
+          <ngb-panel id="trailers" title="Trailers">
+            <template ngbPanelContent>
+              <ngb-carousel>
+                <template ngbSlide *ngFor="let video of videoList">
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" [src]="video.key" allowfullscreen></iframe>
+                  </div>
+                </template>
+              </ngb-carousel>
+            </template>
+          </ngb-panel>
+        </ngb-accordion>
+
+      </div>
+
+
+    </div>
+
+    <div class="col-sm-3 blog-sidebar">
+      <div class="sidebar-module sidebar-module-inset">
+        <h4>Find us on</h4>
+        <ol class="list-unstyled">
+          <li><a href="index.html#">Facebook</a></li>
+        </ol>
+      </div>
+      <div class="sidebar-module">
+        <h4>Similar movies</h4>
+        <div class="list-group" *ngIf="similarList">
+          <li class="list-group-item justify-content-between" *ngFor="let movie of similarList|slice:0:5" [routerLink]="['/movies',movie.id]">
+            {{movie.title|slice:0:10}}
+            <img *ngIf="movie.poster_path" class="d-flex mr-3" height="30" width="" src="{{posterUrl}}{{movie.poster_path}}" alt="Generic placeholder image">
+
+          </li>
+
+        </div>
+      </div>
+
+      <div class="sidebar-module">
+        <h4>Recommended movies</h4>
+        <div class="list-group" *ngIf="recommendedList">
+
+          <li class="list-group-item justify-content-between" *ngFor="let movie of recommendedList|slice:0:5" [routerLink]="['/movies',movie.id]">
+            {{movie.title|slice:0:10}}
+            <img *ngIf="movie.poster_path" class="d-flex mr-3" height="30" width="" src="{{posterUrl}}{{movie.poster_path}}" alt="Generic placeholder image">
+
+          </li>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

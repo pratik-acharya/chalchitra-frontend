@@ -1,0 +1,52 @@
+<div class="header-search" id="search">
+  <!--<form class="search-form container">-->
+    <!--<input type="text" name="search" class="form-control search" value="" placeholder="Search">-->
+    <!--<button type="button" class="btn btn-link"><span class="sr-only">Search </span><i class="fa fa-search fa-flip-horizontal search-icon"></i></button>-->
+    <!--<button type="button" class="btn btn-link close-btn" data-toggle="search-form-close"><span class="sr-only">Close </span><i class="fa fa-times search-icon"></i></button>-->
+  <!--</form>-->
+</div>
+<section class="jumbotron text-center">
+  <div class="container">
+    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+      <input class="form-control" type="text" placeholder="Search">
+      <div class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></div>
+
+    </div>
+    <div class="mr-sm-2">
+      <p class="blog-post-meta badge-wrapper">
+        <span>Movie</span>
+        <span class="pipe">|</span>
+        <span>Celebrities</span>
+      </p>
+    </div>
+  </div>
+
+</section>
+<div class="movie-list text-muted">
+  <div class="container">
+
+    <div class="row">
+      <div class="card" *ngFor="let movie of movies|async" [routerLink]="['/movies',movie.id]" >
+        <img class="card-img-top" src="{{posterUrl}}{{movie.poster_path}}" alt="Card image cap">
+        <div class="card-block">
+          <h4 class="card-title"  ><a [routerLink]="['/movies',movie.id]">{{movie.title}}</a></h4>
+          <p class="card-text"><small class="text-muted">
+            <span>{{movie.release_date|date}}</span>
+            <span class="pipe">|</span>
+            <span>
+              <ngb-rating [(rate)]="movie.vote_average" [max]="1" [readonly]="true">
+              <template let-fill="fill">
+                <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                <span class="h5">{{movie.vote_average}}</span>/10
+              </template>
+            </ngb-rating>
+            </span>
+          </small></p>
+          <p class="card-text">{{movie.overview |slice:0:150}}...</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+

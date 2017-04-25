@@ -1,0 +1,37 @@
+<div id="content">
+  <div class="container">
+<form [formGroup]="registrationForm"  novalidate (ngSubmit)="register(registrationForm.value, registrationForm.valid)" class="form-login form-wrapper form-medium" role="form">
+      <h3 class="title-divider">
+        <span>Sign Up</span>
+        <small class="mt-4">Already signed up? <a href="javascript:void(0)" routerLink="/login">Login here</a>.</small>
+      </h3>
+      <div class="form-group">
+        <label class="sr-only" for="signup-form-name">Name</label>
+        <input type="text" class="form-control" formControlName="name" id="signup-form-name" placeholder="Name">
+        <small [hidden]="registrationForm.controls.name.valid || (registrationForm.controls.name.pristine && !submitted)">Name is required</small>
+      </div>
+      <div class="form-group">
+        <label class="sr-only" for="signup-form-email">Email address</label>
+        <input type="email" class="form-control" formControlName="email" id="signup-form-email" placeholder="Email">
+        <small [hidden]="registrationForm.controls.email.valid || (registrationForm.controls.email.pristine && !submitted)">Email is required</small>
+      </div>
+
+        <div class="form-group">
+        <label class="sr-only" for="signup-form-password">Password</label>
+        <input type="password" class="form-control" formControlName="password" id="signup-form-password" placeholder="Password">
+        <small [hidden]="registrationForm.controls.password.valid || (registrationForm.controls.password.pristine && !submitted)">Password is required</small>
+
+      </div>
+      <hr />
+      <button class="btn btn-primary" type="submit">Sign up</button>
+    </form>
+  </div>
+</div>
+
+
+
+
+
+
+
+

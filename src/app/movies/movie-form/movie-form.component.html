@@ -1,0 +1,110 @@
+<div id="content">
+  <div class="container" id="about">
+    <div class="row">
+      <!-- sidebar -->
+      <div class="col-md-3">
+
+        <!-- Sections Menu-->
+        <div class="nav-section-menu">
+          <div class="nav nav-list">
+            <span class="nav-header">Add Movie</span>
+            <a href="javascript:void(0)" class="nav-link first" [class.active]="steps[currentStepIndex].form=='generalDetails'">
+              General Details
+              <small>title, overview</small>
+              <i class="fa fa-angle-right"></i>
+            </a>
+            <a href="javascript:void(0)" class="nav-link" [class.active]="steps[currentStepIndex].form=='media'">
+              Media
+              <small>posters and videos</small>
+              <i class="fa fa-angle-right"></i>
+            </a>
+            <a href="javascript:void(0)" class="nav-link" [class.active]="steps[currentStepIndex].form=='additionalDetails'">
+              Additional Details
+              <small>genre, duration etc</small>
+              <i class="fa fa-angle-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!--main content-->
+      <div class="col-md-9">
+        <h2 class="title-divider">
+          <span>{{steps[currentStepIndex].heading}}</span>
+        </h2>
+        <div>
+
+          <form [formGroup]="movieForm"  novalidate class="form-login form-wrapper mb-2" (ngSubmit)="add()">
+            <div formGroupName="generalDetails" *ngIf="steps[currentStepIndex].form=='generalDetails'">
+              <div class="form-group">
+                <label class="sr-only" for="movie-form-title">Title</label>
+                <input type="text" id="movie-form-title" class="form-control" placeholder="Title" formControlName="title">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="movie-form-overview">Overview</label>
+                <textarea type="text" id="movie-form-overview" class="form-control" placeholder="Overview" formControlName="overview"></textarea>
+              </div>
+            </div>
+            <div formGroupName="additionalDetails" *ngIf="steps[currentStepIndex].form=='additionalDetails'">
+              <!--<ss-multiselect-dropdown [options]="myOptions" formControlName="optionsModel"></ss-multiselect-dropdown>-->
+
+              <div class="form-group">
+                <label class="sr-only" for="movie-form-duration">Duration</label>
+                <input type="text" id="movie-form-duration" class="form-control" placeholder="Duration" formControlName="duration">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="movie-form-status">Status</label>
+                <input type="text" id="movie-form-status" class="form-control" placeholder="Status" formControlName="status">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="movie-form-release-date">Release date</label>
+                <input type="text" id="movie-form-release-date" class="form-control" placeholder="Release date" formControlName="releaseDate">
+              </div>
+            </div>
+
+            <div formGroupName="media" *ngIf="steps[currentStepIndex].form=='media'">
+              <div formGroupName="photo" >
+                <h3 class="title-divider">
+                  <span>Photo</span>
+                </h3>
+
+                <div class="row">
+                <div class="col-md-4 form-group">
+                    <input type="file"  ng2FileSelect [uploader]="uploader" (change)="subscribeToFormChanges()" multiple formControlName="file"/>
+                  </div>
+                  <div class="col-md-8">
+                    <ul class="list-group">
+                      <li class="list-group-item" *ngFor="let item of uploader.queue">{{ item?.file?.name }}</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div formGroupName="video" >
+                <h3 class="title-divider">
+                  <span>Video</span>
+                </h3>
+
+                <div class="form-group">
+                  <label class="sr-only" for="movie-form-video-source">source</label>
+                  <input type="text" id="movie-form-video-source" class="form-control" placeholder="Source" formControlName="source">
+                </div>
+
+              </div>
+
+
+
+
+            </div>
+
+          </form>
+        </div>
+        <button type="button" class="btn btn-outline-primary btn-rounded btn-lg "
+                (click)="previous()" [disabled]="steps[currentStepIndex].previousButton.disabled">{{steps[currentStepIndex].previousButton.text}}
+        </button>
+        <button type="button" class="btn btn-outline-primary btn-rounded btn-lg pull-right"
+                (click)="next()" [disabled]="steps[currentStepIndex].nextButton.disabled">{{steps[currentStepIndex].nextButton.text}}
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="header-search" id="search">
+  <form class="search-form container" [formGroup]="searchForm">
+    <input type="text" name="search" class="form-control search" value="" placeholder="Search">
+    <button type="button" class="btn btn-link"><span class="sr-only">Search </span><i class="fa fa-search fa-flip-horizontal search-icon"></i></button>
+    <button type="button" class="btn btn-link close-btn" data-toggle="search-form-close"><span class="sr-only">Close </span><i class="fa fa-times search-icon"></i></button>
+  </form>
+</div>
+<div id="content" class="py-3 py-lg-6">
+
+  <div class="container">
+    <div class="row">
+      <!-- Products grid -->
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="col-lg-4" *ngFor="let movie of movies|async" [routerLink]="['/movies',movie.id]">
+            <!-- Product 2 -->
+            <div class="card mb-4 product-card overlay-hover">
+              <!-- Hover content -->
+              <div class="overlay-hover-content overlay-op-7">
+                <p class="card-text">{{movie.overview |slice:0:400}}..</p>
+                <a href="javascript:void(0)"class="text-primary text-sm " [routerLink]="['/movies',movie.id]">Details</a>
+              </div>
+              <!-- Image & price content -->
+              <div class="pos-relative">
+                <img class="card-img-top img-fluid"  src="{{posterUrl}}{{movie.poster_path}}" alt="Card image cap">
+                <span class="product-price-badge pos-absolute pos-t pos-r mt-2 mr-2 persist text-primary">
+                  <ngb-rating [(rate)]="movie.vote_average" [max]="1" [readonly]="true">
+                    <template let-fill="fill">
+                      <span class="star " [class.text-primary]="fill === 100">&#9733;</span>
+                      <span class="h5" >{{movie.vote_average}}/10</span>
+                    </template>
+                  </ngb-rating>
+                </span>
+              </div>
+              <!-- Content -->
+              <div class="card-block">
+                <h4 class="card-title">
+                  {{movie.title}}
+                </h4>
+                <small class="text-muted text-uppercase"><span class="text-primary">{{movie.release_date|date}}</span></small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

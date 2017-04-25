@@ -1,0 +1,7 @@
+.product-card .persist {
+  z-index: 10;
+}
+.product-price-badge {
+  font-size: 95%;
+  padding: .5em;
+}
